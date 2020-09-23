@@ -1,6 +1,8 @@
 package model;
+import java.io.*;
 
-public class Restaurant {
+public class Restaurant{
+	
 	private String name;
 	private int nit;
 	private String admin;

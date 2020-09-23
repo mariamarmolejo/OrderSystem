@@ -1,18 +1,23 @@
 package model;
+import java.io.*;
+import java.util.Comparator;
 
-public class Client {
+public class Client{
+	
 	public static final String CEDULA_CIUDADANIA = "CC";
 	public static final String CEDULA_EXTRANJERIA = "CE";
 	public static final String TARJETA_IDENTIDAD = "TI";
 	public static final String PASAPORTE = "PP";
 	private String name;
+	private String lastName;
 	private String type;
 	private String address;
 	private int id;
 	private int phone;
 	
-	public Client(String name, String type, String address, int id, int phone) {
+	public Client(String name, String lastName, String type, String address, int id, int phone) {
 		this.name = name;
+		this.lastName = lastName;
 		this.type = type;
 		this.address = address;
 		this.id = id;
@@ -48,7 +53,8 @@ public class Client {
 	public void setPhone(int phone) {
 		this.phone = phone;
 	}
-	
-	
+	public String getLastName() {
+		return lastName;
+	}
 	
 }

@@ -1,6 +1,7 @@
 package model;
+import java.io.*;
 
-public class Product {
+public class Product{
 	private int code;
 	private String name;
 	private String description;

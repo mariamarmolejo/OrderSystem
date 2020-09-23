@@ -1,8 +1,9 @@
 package model;
 import model.Product;
+import java.io.*;
 import java.util.*;
 
-public class Order {
+public class Order{
 	
 	private int code;
 	private int date;
@@ -10,15 +11,16 @@ public class Order {
 	private int clientCode;
 	private int nit;
 	private Boolean state;
+	private List<Product> productsOr;
 	
-	public Order(int code, int date, int hour, int clientCode, int nit, Boolean state, List<Product> products) {
+	public Order(int code, int date, int hour, int clientCode, int nit, Boolean state, List<Product> productsOr) {
 		this.code = code;
 		this.date = date;
 		this.hour = hour;
 		this.clientCode = clientCode;
 		this.nit = nit;
 		this.state = state;
-		this.products = new ArrayList<Product>();
+		this.productsOr = new ArrayList<Product>();
 	}
 	public Boolean getState() {
 		return state;
@@ -26,7 +28,6 @@ public class Order {
 	public void setState(Boolean state) {
 		this.state = state;
 	}
-	private List<Product> products;
 	
 	public int getCode() {
 		return code;
@@ -58,11 +59,11 @@ public class Order {
 	public void setNit(int nit) {
 		this.nit = nit;
 	}
-	public List<Product> getProducts() {
-		return products;
+	public List<Product> getProductsOr() {
+		return productsOr;
 	}
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setProducts(List<Product> productsOr) {
+		this.productsOr = productsOr;
 	}
 	
 	
