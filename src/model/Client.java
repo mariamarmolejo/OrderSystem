@@ -1,8 +1,9 @@
 package model;
 import java.io.*;
 import java.util.Comparator;
+import java.lang.Comparable.*;
 
-public class Client{
+public class Client implements Serializable , Comparable<Client>{
 	
 	public static final String CEDULA_CIUDADANIA = "CC";
 	public static final String CEDULA_EXTRANJERIA = "CE";
@@ -55,6 +56,19 @@ public class Client{
 	}
 	public String getLastName() {
 		return lastName;
+	}
+	
+	@Override
+	public int compareTo(Client cl) {
+		int comp;
+		if(phone < cl.getPhone()) {
+			comp = 1;
+		}else if(phone > cl.getPhone()) {
+			comp = -1;
+		}else {
+			comp = 0;
+		}
+		return comp;
 	}
 	
 }

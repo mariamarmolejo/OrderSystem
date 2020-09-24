@@ -90,9 +90,8 @@ public class Menu {
 		menu =  "========================================\n";
 		menu += "              DISPLAY MODULE\n";
 		menu += "========================================\n";
-		menu += "1. Show list of orders\n";
+		menu += "1. Show list of restaurants\n";
 		menu += "2. Show list of clients\n";
-		menu += "3. Show list of restaurants\n";
 		menu += "========================================\n";
 		menu += "Please enter de option\n";
 		menu += "========================================\n";
@@ -132,10 +131,21 @@ public class Menu {
 			case 1:
 				executeAddClient();
 				System.out.println("========================================");
-				System.out.println("            SUCCESSFULLY");
+				System.out.println("              SUCCESSFUL");
 			break;
 			case 2:
-				System.out.println("opcion 2 register");
+				executeAddProduct();
+				System.out.println("========================================");
+				System.out.println("              SUCCESSFUL");
+			break;
+			case 3:
+				executeAddRestaurant();
+				System.out.println("========================================");
+				System.out.println("              SUCCESSFUL");
+			break;
+			case 4:
+				System.out.println("========================================");
+				System.out.println("          AUN NO LO HAGO XD");
 			break;
 			default:
 				System.out.println("Wrong option.");
@@ -161,10 +171,14 @@ public class Menu {
 	//Execute display module
 	private void executeOperationDisplay(int option) {
 		switch(option) {
+			//listar restaurantes por nombre orden alfabetico ascendente
 			case 1:
-				System.out.println("opcion 1 display");
+				conection.sortByNameRestaurant();
+				System.out.println(conection.toStringRestaurants());
 			break;
+			//listar clientes por telefono orden numerico descendente
 			case 2:
+				conection.sortByPhoneClient();
 				System.out.println(conection.toStringClients());
 			break;
 			default:
@@ -186,7 +200,7 @@ public class Menu {
 			startDisplayModule();
 		break;
 		case 4:
-			
+			System.out.println(conection.toStringProducts());
 		break;
 		case 5:
 			System.out.println("========================================");
@@ -206,6 +220,7 @@ public class Menu {
 		return op;
 	}
 	
+	//Ask to add client
 	private void executeAddClient() throws IOException {
 		System.out.println("========================================");
 		System.out.print("Write the name:");
@@ -228,4 +243,37 @@ public class Menu {
 		conection.addClient(na, ln, ty, ad,id, ph);
 	}
 	
+	//Ask to add product
+	private void executeAddProduct() throws IOException {
+		System.out.println("========================================");
+		System.out.print("Write the code:");
+		int code = Integer.parseInt(br.readLine());
+		System.out.println("========================================");
+		System.out.print("Write the name:");
+		String name = br.readLine();
+		System.out.println("========================================");
+		System.out.print("Write a little description:");
+		String description = br.readLine();
+		System.out.println("========================================");
+		System.out.print("Write the nit:");
+		int nit = Integer.parseInt(br.readLine());
+		System.out.println("========================================");
+		System.out.print("Write the price:");
+		double price = Double.parseDouble(br.readLine());
+		conection.addProduct(code, name, description, nit, price);
+	}
+	
+	//Ask to add restaurant
+	private void executeAddRestaurant() throws IOException {
+		System.out.println("========================================");
+		System.out.print("Write the name:");
+		String name = br.readLine();
+		System.out.println("========================================");
+		System.out.print("Write the nit:");
+		int nit = Integer.parseInt(br.readLine());
+		System.out.println("========================================");
+		System.out.print("Write the admin name:");
+		String admin = br.readLine();
+		conection.addRestaurant(name, nit, admin);
+	}
 }

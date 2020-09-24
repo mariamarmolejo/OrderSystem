@@ -1,7 +1,7 @@
 package model;
 import java.io.*;
 
-public class Restaurant{
+public class Restaurant implements Serializable{
 	
 	private String name;
 	private int nit;

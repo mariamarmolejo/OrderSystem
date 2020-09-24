@@ -6,9 +6,9 @@ public class Product{
 	private String name;
 	private String description;
 	private int nit;
-	private int price;
+	private double price;
 	
-	public Product(int code, String name, String description, int nit, int price) {
+	public Product(int code, String name, String description, int nit, double price) {
 		this.code = code;
 		this.name = name;
 		this.description = description;
@@ -40,10 +40,10 @@ public class Product{
 	public void setNit(int nit) {
 		this.nit = nit;
 	}
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	

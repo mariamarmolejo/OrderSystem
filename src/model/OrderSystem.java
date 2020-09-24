@@ -12,6 +12,26 @@ public class OrderSystem implements Serializable {
 	public ArrayList<Product> products;
 	public ArrayList<Client> clients;
 	public ArrayList<Restaurant> restaurants;
+	public final static String SAVE_PATH_FILE_CLIENT = "data/client.txt";
+	public final static String SAVE_PATH_FILE_RESTAURANT = "data/restaurant.txt";
+	public final static String SAVE_PATH_FILE_PRODUCT = "data/product.txt";
+	public final static String SAVE_PATH_FILE_ORDER = "data/order.csv";
+	
+	public void saveData() throws IOException{
+	    ObjectOutputStream file_client = new ObjectOutputStream(new FileOutputStream(SAVE_PATH_FILE_CLIENT));
+	    ObjectOutputStream file_product = new ObjectOutputStream(new FileOutputStream(SAVE_PATH_FILE_PRODUCT));
+	    ObjectOutputStream file_restaurant = new ObjectOutputStream(new FileOutputStream(SAVE_PATH_FILE_RESTAURANT));
+	    ObjectOutputStream file_order = new ObjectOutputStream(new FileOutputStream(SAVE_PATH_FILE_ORDER));
+	    file_client.writeObject(clients);
+	    file_product.writeObject(products);
+	    file_restaurant.writeObject(restaurants);
+	    file_order.writeObject(orders);
+	    file_client.close();
+	    file_product.close();
+	    file_restaurant.close();
+	    file_order.close();
+	 }
+
 	
 	public OrderSystem(){
 		this.products = new ArrayList<Product>();
@@ -52,22 +72,23 @@ public class OrderSystem implements Serializable {
 		this.restaurants = restaurants;
 	}
 	
-	public void addProduct(int code, String name, String description, int nit, int price) {
+	public void addProduct(int code, String name, String description, int nit, double price) {
 		Product pr = new Product(code,name,description,nit,price);
 		products.add(pr);
 	}
 	
-	public void addRestaurant(String name, int nit, String admin) {
+	public void addRestaurant(String name, int nit, String admin) throws IOException {
 		Restaurant re = new Restaurant(name, nit, admin);
 		restaurants.add(re);
+		saveData();
 	}
 	
-/*	public void sortByName() {
-		NameComparator nc = new NameComparator();
-		Collections.sort(clients,nc);
+	public void addOrder(int code, int date, int hour, int clientCode, int nit, Boolean state, List<Product> productsOr) {
+		Order or = new Order(code, date, hour, clientCode, nit, state, productsOr);
+		orders.add(or);
 	}
-	*/
-	public void addClient(String name, String lastname, String type, String address, int id, int phone){
+	
+	public void addClient(String name, String lastname, String type, String address, int id, int phone) throws IOException{
 		  	Client c = new Client (name, lastname, type, address, id, phone);
 			if(clients.isEmpty()){
 		 		clients.add(c);
@@ -81,6 +102,7 @@ public class OrderSystem implements Serializable {
 		 		}
 		 		((ArrayList<Client>)clients).add(i,c);
 		 	}
+			saveData();
 		 }
 	
 	public String toStringClients() {
@@ -89,10 +111,23 @@ public class OrderSystem implements Serializable {
 		m += "                  CLIENTS\n";
 		m += "========================================\n";
 		for (int i = 0; i < clients.size(); i++) {
-			m += clients.get(i).getLastName() +" "+ clients.get(i).getName()+", "+clients.get(i).getAddress()+", "+
-					clients.get(i).getPhone()+", "+
-					clients.get(i).getType()+": "+
-					clients.get(i).getId()+ "\n";
+			m += "NAME:"+clients.get(i).getLastName() +" "+ clients.get(i).getName()+ "\n"
+					+"ADDRESS:"+clients.get(i).getAddress()+ "\n"
+					+"PHONE:"+clients.get(i).getPhone()+ "\n"
+					+clients.get(i).getType()+": "+clients.get(i).getId()+ "\n"
+					+ "----------------------------------------\n";
+		 }
+		
+		return m;
+	}
+
+	public String toStringProducts() {
+		String m;
+		m  = "========================================\n";
+		m += "                  PRODUCTS\n";
+		m += "========================================\n";
+		for (int i = 0; i < products.size(); i++) {
+			m += products.get(i).getName() + ": " + products.get(i).getPrice()  + "\n";
 		 }
 		
 		return m;
@@ -103,11 +138,22 @@ public class OrderSystem implements Serializable {
 		m  = "========================================\n";
 		m += "                  RESTAURANTS\n";
 		m += "========================================\n";
-		for (int i = 0; i < clients.size(); i++) {
-			m += clients.get(i).getLastName() + " " + clients.get(i).getName()  + "\n";
+		for (int i = 0; i < restaurants.size(); i++) {
+			m += restaurants.get(i).getName() + " by: " + restaurants.get(i).getAdmin()  + "\n";
+			m += "NIT:"+restaurants.get(i).getNit()+"\n";
+			m += "----------------------------------------\n";
 		 }
 		
 		return m;
+	}
+	
+	public void sortByNameRestaurant() {
+		NameComparator nc = new NameComparator();
+		Collections.sort(restaurants,nc);
+	}
+	
+	public void sortByPhoneClient() {
+		Collections.sort(clients);
 	}
 }
 /*	 public void ordenar() {
@@ -122,13 +168,6 @@ public class OrderSystem implements Serializable {
 	            }
 	        }
 	    }
-	
-	public void addOrder(int code, int date, int hour, int clientCode, int nit, Boolean state, List<Product> productsOr) {
-		Order or = new Order(code, date, hour, clientCode, nit, state, productsOr);
-		orders.add(or);
-	}
-	
-	
 }
 /*
  * public void addClient(String name, String type, String address, int id, int phone){
@@ -144,3 +183,8 @@ public class OrderSystem implements Serializable {
  * 		}
  * } 
  */
+/*	public void sortByName() {
+NameComparator nc = new NameComparator();
+Collections.sort(clients,nc);
+}
+*/
